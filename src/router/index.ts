@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AccountMain from '../components/accountMain.vue'
-import UserMain from '../components/userMain.vue'
-import AccountSetting from '../components/accountSetting.vue'
+import AccountMain from '../views/accountMain.vue'
+import UserMain from '../views/userMain.vue'
+import AccountSetting from '../views/accountSetting.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import AccountLists from '../components/accountList.vue'
-import Select from './select.vue'
-import DateSingle from './dateSingle.vue'
+import AccountLists from '../components/account/accountList.vue'
 
 import { computed, reactive, ref, onMounted } from 'vue'
 

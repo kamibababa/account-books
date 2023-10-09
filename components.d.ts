@@ -7,12 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AccountList: typeof import('./src/components/accountList.vue')['default']
-    AccountListItem: typeof import('./src/components/accountListItem.vue')['default']
-    AccountMain: typeof import('./src/components/accountMain.vue')['default']
-    AccountSetting: typeof import('./src/components/accountSetting.vue')['default']
-    copy: typeof import('./src/components/example copy.vue')['default']
-    DateSingle: typeof import('./src/components/dateSingle.vue')['default']
+    AccountList: typeof import('./src/components/account/accountList.vue')['default']
+    AccountListItem: typeof import('./src/components/account/accountListItem.vue')['default']
+    AccountMain: typeof import('./src/views/account/accountMain.vue')['default']
+    AccountSetting: typeof import('./src/views/settings/accountSetting.vue')['default']
+    DateSingle: typeof import('./src/components/date/dateSingle.vue')['default']
     ElAffix: typeof import('element-plus/es')['ElAffix']
     ElBacktop: typeof import('element-plus/es')['ElBacktop']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -45,10 +44,11 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Select: typeof import('./src/components/select.vue')['default']
+    SelectSingle: typeof import('./src/components/select/selectSingle.vue')['default']
     Setting: typeof import('./src/components/setting.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
-    UserList: typeof import('./src/components/userList.vue')['default']
-    UserListItem: typeof import('./src/components/userListItem.vue')['default']
+    UserList: typeof import('./src/components/usermanager/userList.vue')['default']
+    UserListItem: typeof import('./src/components/usermanager/userListItem.vue')['default']
     UserMain: typeof import('./src/components/userMain.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import AccountList from './components/accountList.vue'
 
 import { computed, reactive, ref, nextTick } from 'vue'
 import { Calendar, Search } from '@element-plus/icons-vue'

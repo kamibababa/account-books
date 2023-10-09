@@ -8,17 +8,14 @@ axios.defaults.timeout = 60000;
 
 // 请求地址，这里是动态赋值的的环境变量，下一篇会细讲，这里跳过
 // @ts-ignore
-axios.defaults.baseURL = import.meta.env.BASE_URL;   
+axios.defaults.baseURL = import.meta.env.BASE_URL;
 
 //http request 拦截器
 axios.interceptors.request.use(
   config => {
-  // 配置请求头
-    config.headers = {
-        //'Content-Type':'application/x-www-form-urlencoded',   // 传参方式表单
-        'Content-Type':'application/json;charset=UTF-8',        // 传参方式json
-        'token':''              // 这里自定义配置，这里传的是token
-    };
+    // 配置请求头
+    config.headers.set('Content-Type','application/json;charset=UTF-8')
+    config.headers.set('token','')
     return config;
   },
   error => {
@@ -32,7 +29,7 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
-    const {response} = error;
+    const { response } = error;
     if (response) {
       // 请求已发出，但是不在2xx的范围
       showMessage(response.status);           // 传入响应码，匹配响应码对应信息
@@ -44,27 +41,27 @@ axios.interceptors.response.use(
 );
 
 // 封装 GET POST 请求并导出
-export function request(url='',params={},type='POST'){
-//设置 url params type 的默认值
-return new Promise((resolve,reject)=>{
-  let promise
-  if( type.toUpperCase()==='GET' ){
-    promise = axios({
-      url,
-      params
+export function request(url = '', params = {}, type = 'POST') {
+  //设置 url params type 的默认值
+  return new Promise((resolve, reject) => {
+    let promise
+    if (type.toUpperCase() === 'GET') {
+      promise = axios({
+        url,
+        params
+      })
+    } else if (type.toUpperCase() === 'POST') {
+      promise = axios({
+        method: 'POST',
+        url,
+        data: params
+      })
+    }
+    //处理返回
+    promise.then(res => {
+      resolve(res)
+    }).catch(err => {
+      reject(err)
     })
-  }else if( type.toUpperCase()=== 'POST' ){
-    promise = axios({
-      method:'POST',
-      url,
-      data:params
-    })
-  }
-  //处理返回
-  promise.then(res=>{
-    resolve(res)
-  }).catch(err=>{
-    reject(err)
   })
-})
 }

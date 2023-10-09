@@ -9,7 +9,10 @@ const width_right = ref(16);
 
 
 <template>
-    <li class="item">
+   <!-- 分割线 -->
+   <li>
+   <el-divider style="margin:10px 5px"><el-text style="padding: 0 5px"><el-icon><Notebook /></el-icon></el-text></el-divider>
+    <div class="item">
         <el-row :gutter="10">
           <el-col :span="width_left">
             <el-text style="float: right; font-weight: bold;"><el-icon style="margin-right: 5px;">
@@ -19,6 +22,7 @@ const width_right = ref(16);
             <slot name="username"></slot>
             <el-text style="padding:3px;margin-left:3px;font-size:12px;color:green;line-height:100%;background-color: #e9e8e8">
                 <slot name="status"></slot>
+                <Edit style="width: 1.3em; height: 1.3em; float: right; margin-right: 8px;" />
             </el-text>
           </el-col>
         </el-row>
@@ -46,7 +50,8 @@ const width_right = ref(16);
             <slot name="remark"></slot>
           </el-col>
         </el-row>
-    </li>
+    </div>
+  </li>
   </template>
   
   <style scoped>

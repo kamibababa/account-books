@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import UserList from './userList.vue'
+import UserList from '@/components/usermanager/userList.vue'
 
 import { computed, reactive, ref } from 'vue'
 import { Calendar, Search, Plus } from '@element-plus/icons-vue'
@@ -40,9 +40,8 @@ const form = reactive({
 </script>
 
 <template>
-  <header>
-    <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
-    <div class="demo-input-suffix" style="margin-bottom: 10px;">
+  <!-- <header> -->
+    <!-- <div class="demo-input-suffix" style="margin-bottom: 10px;">
       <el-row :gutter="10">
         <el-col :span="18">
           <el-input v-model="input2" class="w-50 m-2" placeholder="请输入姓名、手机号" :prefix-icon="Search" />
@@ -60,14 +59,14 @@ const form = reactive({
         <el-col :span="9"  style="padding-top: 5px;"><el-button style="float: right;background: aliceblue;"
             @click="dialogFormVisible = true" :icon="Plus" >添加</el-button></el-col>
       </el-row>
-    </div>
+    </div> -->
     <!-- <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div> -->
-  </header>
+  <!-- </header> -->
   <user-list></user-list>
   <!-- 底部导航 -->
   <!-- <el-affix target="#app" position="bottom" :offset="0" z-index="99999" style="height:40px">
@@ -94,7 +93,7 @@ const form = reactive({
   </el-affix> -->
 
   <!-- 模态框 -->
-  <el-dialog v-model="dialogFormVisible" close-on-click-modal="false" title="新增人员" style="width: 90%;background-color: aliceblue;">
+  <!-- <el-dialog v-model="dialogFormVisible" close-on-click-modal="false" title="新增人员" style="width: 90%;background-color: aliceblue;">
     <el-form :model="form">
       <el-form-item label="姓名:" :label-width="formLabelWidth">
         <el-input v-model="form.username" autocomplete="off" />
@@ -124,7 +123,7 @@ const form = reactive({
         </el-button>
       </span>
     </template>
-  </el-dialog>
+  </el-dialog> -->
   <!-- <RouterView /> -->
 </template>
 
