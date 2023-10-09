@@ -7,6 +7,7 @@
     <div class="m-20">
       <!-- 强制刷新 $forceUpdate: 有些变量不在 state 上，但是你又想达到这个变量更新的时候，刷新 render-->
       <el-select
+        :disabled="props.selectedDisabled"
         v-model="sea"
         filterable
         remote
@@ -66,10 +67,11 @@ const remoteMethod = (query: string) => {
 }
 
 // 通过ajax请求获取到user列表
-const users = ref<AccountUser[]>([])
+const users = ref(new Map<number,AccountUser>())
 // 父子传值
 const props = defineProps<{
   accountUser: AccountUser
+  selectedDisabled: boolean
 }>()
 // 子父传值
 // 监听方法
@@ -78,14 +80,13 @@ const emit = defineEmits([
 ])
 // change事件获取值
 const selectNameFuc = (para: ListItem)=>{
+  console.log("para:" + para.label + para.value)
   // 刷新组件，让其显示选中的值
   proxy?.$forceUpdate()
+  // 动态回显附属值
+  const tmpUser = users.value.get(para.value)
   // 将值传递给父组件
-  console.log("para:" + para.label + para.value)
-  emit('update:fatherData',{
-    "userId": para.value,
-    "username": para.label    
-  });
+  emit('update:fatherData',tmpUser);
 }
 // watchEffect(() => {
 //   console.log(props.accountUser)
@@ -111,7 +112,7 @@ const accountUserSelectFuc = async () => {
   if(res.data.records){
     console.log(res.data.records)
     res.data.records.forEach((element: AccountUser) => {
-      users.value.push(element);
+      users.value.set(element.userId,element);
       // list.value = users.value.map((item) => {
       //   return {value: item.userId, label: `${item.username}`}
       // })

@@ -2,7 +2,7 @@
 import accountListItem from './accountListItem.vue'
 import { computed, ref, defineProps,toRefs,onMounted,reactive } from 'vue'
 import { Calendar, Search,Plus } from '@element-plus/icons-vue'
-import { type AccountBook,AccoutListService} from '@/api/api'
+import { type AccountBook,AccoutListService, type AccountUser} from '@/api/api'
 import DateSingle from '../date/dateSingle.vue'
 import Select from '../select/selectSingle.vue'
 import { ElMessage } from 'element-plus'
@@ -18,6 +18,8 @@ const mobile = ref('')
 const username = ref('')
 const remark = ref('')
 const accountBookChild = ref()
+const selectedDisabled = ref(true)
+const endDate = ref('')
 
 onMounted(()=>{
   inputSearch.value = ''
@@ -91,6 +93,9 @@ const dialogFormVisible = ref(false)
 const formLabelWidth = '80px'
 // 添加
 const addAccountBooks = ()=>{
+    // 可选
+    selectedDisabled.value = false;
+    // 赋值
     form.id = -1
     form.userId = -1
     form.username = ''
@@ -100,15 +105,22 @@ const addAccountBooks = ()=>{
     form.endDate = ''
     form.status = ''
     form.accountAmount = ''
+    // 传值给子组件
     accountBookChild.value = form
+    endDate.value = form.endDate
     // 打开模态框
     dialogFormVisible.value = true
 }
 // 编辑
 const editAccountBooks3 = (accountBook: AccountBook)=>{
+  // 可选
+  selectedDisabled.value = true;
   // 赋值
   if(accountBook){
+
     accountBookChild.value = accountBook
+    endDate.value = accountBook.endDate
+
     form.id = accountBook.id
     form.userId = accountBook.userId
     form.username = accountBook.username
@@ -128,8 +140,14 @@ const editAccountBooks3 = (accountBook: AccountBook)=>{
   }
 }
 // 获取子组件的值
-const accountUserCurrent = (para: any)=>{
-  accountBookChild.value = para
+const accountUserCurrent = (para: AccountUser)=>{
+  // accountBookChild.value = para
+  // 动态变更
+  form.address = para.address
+  form.remark = para.remark
+  form.mobile = para.remark
+  form.userId = para.userId
+  form.username = para.username
 }
 const accountEndDate = ref()
 const accountEndDateCurrent = (para: any)=>{
@@ -151,8 +169,8 @@ const accountSubmit = async () => {
   console.log(accountBookChild.value + "===" + accountEndDate.value)
   const res: any = await AccoutListService.edit({
     "id": form.id,
-    "userId": accountBookChild.value.userId,
-    "username": accountBookChild.value.username,
+    "userId": form.userId,
+    "username": form.username,
     "mobile": form.mobile,
     "address": form.address,
     "endDate": accountEndDate,
@@ -233,7 +251,7 @@ const accountSubmit = async () => {
     <el-form :model="form">
       <el-form-item label="姓名:" :label-width="formLabelWidth">
         <!-- v-if重新加载组件 -->
-        <Select :accountUser=accountBookChild v-if="dialogFormVisible" @update:father-data="accountUserCurrent"></Select>
+        <Select :accountUser=accountBookChild  :selectedDisabled="selectedDisabled" v-if="dialogFormVisible" @update:father-data="accountUserCurrent"></Select>
       </el-form-item>
       <el-form-item label="结算状态:" :label-width="formLabelWidth">
         <el-select v-model="form.status" placeholder="请选择结算状态" style="width: 100%;">
@@ -256,7 +274,7 @@ const accountSubmit = async () => {
         </el-row>
       </el-form-item>
       <el-form-item label="截至日期:" :label-width="formLabelWidth">
-        <date-single :endDate="form.endDate" @update:father-data="accountEndDateCurrent"></date-single>
+        <date-single :endDate="endDate" v-if="dialogFormVisible" @update:father-data="accountEndDateCurrent"></date-single>
       </el-form-item>
       <el-form-item label="联系电话:" :label-width="formLabelWidth">
         <el-input v-model="form.mobile"/>
